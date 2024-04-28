@@ -59,7 +59,7 @@ from io import BytesIO
 
 #-------------------------------------------------------------------------------------
 #ست کردن توکن تلگرام
-# TOKEN = "6524694661:AAH1YrHD9yPMqwrBu6yG88TPJvXFKMg0QVo"
+
 TOKEN = env['TOKEN']
 #------------------------------------------------------------------------------------- 
 #------------------------------------------------------------------------------------- 
@@ -377,7 +377,7 @@ def login(chat_id):
     chat_id = chat_id
     url = f'https://api.telegram.org/bot{TOKEN}/sendMessage'
     response = requests.post(env['account_management'] , data={'chat':str(chat_id)}, headers={'token':env['token']})
-    #response = requests.post('http://136.243.86.140:81/api/account_management' ,  data={'chat':str(chat_id)}, headers={'token':'UGFGtZ.RkMfiqfy80O5EP0VoBiVrcs3GGcjJjGKAyr2UAxNtG'})
+    
     add_log(str(response.content), log_type='account_management')
     if response.status_code == 200:
         
@@ -443,7 +443,7 @@ def buy(chat_id):
 #-----------------------------------------------------------------------
     chat_id = chat_id
     response1 = requests.post(env['get-balance'] , data={'chat': str(chat_id)}, headers={'token':env['token']})
-    #response1 = requests.post('http://136.243.86.140:81/api/get-balance', data={'chat': str(chat_id)}, headers={'token':'UGFGtZ.RkMfiqfy80O5EP0VoBiVrcs3GGcjJjGKAyr2UAxNtG'})
+    
     add_log(str(response1.content), log_type='get-balance')
     if response1.status_code == 200:
         balance= response1.json() 
@@ -455,7 +455,7 @@ def buy(chat_id):
 
     url = f'https://api.telegram.org/bot{TOKEN}/sendMessage'
     response = requests.post(env['service-account'] , headers={'token':env['token']})
-    #response = requests.post('http://136.243.86.140:81/api/service-account', headers={'token':'UGFGtZ.RkMfiqfy80O5EP0VoBiVrcs3GGcjJjGKAyr2UAxNtG'})
+    
     add_log(str(response.content), log_type='service-account11')
     if response.status_code == 200:
         
@@ -489,7 +489,7 @@ def send2(chat_id, user_email):
 
   
     response = requests.post(env['find-server-test'] , data={'email': user_email , 'chat':str(chat_id)}, headers={'token':env['token']})
-    #response = requests.post('http://136.243.86.140:81/api/find-server-test' ,  data={'email': user_email , 'chat':str(chat_id)}, headers={'token':'UGFGtZ.RkMfiqfy80O5EP0VoBiVrcs3GGcjJjGKAyr2UAxNtG'})
+    
     add_log(str(response.content), log_type='find-server-test2')
     if response.status_code == 200:
                 
@@ -571,7 +571,7 @@ def send2(chat_id, user_email):
 #-------------------------------------------------------------------------------------------------------------
 #لازمه های اجرای دکمه های اینلاین
 BASE_URL = f'https://api.telegram.org/bot{TOKEN}/'
-#BASE_URL = f"https://api.telegram.org/bot6524694661:AAH1YrHD9yPMqwrBu6yG88TPJvXFKMg0QVo/"
+
 def send_telegram_request(method, params=None):
     url = BASE_URL + method
     response = requests.post(url, json=params)
@@ -688,8 +688,7 @@ def handle_callback(update):
     elif "changepass#s#" in data:
         udata=data.split(",")
         response = requests.post(env['change-password'] , data={'accountnum':str(udata[0])}, headers={'token':env['token']})
-        # response = requests.post('http://g11.hologate88.com:81/api/change-password' ,  data={'accountnum':str(udata[0])}, headers={'token':'UGFGtZ.RkMfiqfy80O5EP0VoBiVrcs3GGcjJjGKAyr2UAxNtG'})
-        add_log(str(response.content), log_type='change-password')
+        
         link = response.json() 
         if response.status_code == 200:
             tel_send_message(chat_id, "جهت تغییر رمز عبور این اکانت، وارد لینک زیر شوید:"+"\n"+str(link["message"]))
@@ -703,8 +702,7 @@ def handle_callback(update):
     elif "s_account_show*&^%@" in data:
         udata=data.split(",")
         response = requests.post(env['show-account'] , data={'accountnum':str(udata[0])}, headers={'token':env['token']})
-        # response = requests.post('http://136.243.86.140:81/api/show-account' ,  data={'accountnum':str(udata[0])}, headers={'token':'UGFGtZ.RkMfiqfy80O5EP0VoBiVrcs3GGcjJjGKAyr2UAxNtG'})
-        add_log(str(response.content), log_type='show-account')
+        
         if response.status_code == 200:
         # Parse the JSON response
             account = response.json() 
@@ -732,7 +730,7 @@ def handle_callback(update):
         
         response = requests.post(env['find-provider/with-account-move'] , data={'type':"ssh", 'accountnum':str(udata[0])}, headers={'token':env['token']})
         add_log(str(response.content), log_type='find-provider/with-account-move-ssh')
-        # response = requests.post('http://g11.hologate88.com:81/api/find-provider/with-account-move' ,  data={'type':"ssh", 'accountnum':str(udata[0])}, headers={'token':'UGFGtZ.RkMfiqfy80O5EP0VoBiVrcs3GGcjJjGKAyr2UAxNtG'})
+        
         if response.status_code == 200:   
         # Parse the JSON response
             servers = response.json() 
@@ -774,7 +772,7 @@ def handle_callback(update):
         # tel_send_message(chat_id, str(udata))
         response = requests.post(env['find-provider/with-account-move'] , data={'type':"v2ray", 'accountnum':str(udata[0])}, headers={'token':env['token']})
         add_log(str(response.content), log_type='find-provider/with-account-move-v2ray')
-        # response = requests.post('http://g11.hologate88.com:81/api/find-provider/with-account-move' ,  data={'type':"v2ray", 'accountnum':str(udata[0])}, headers={'token':'UGFGtZ.RkMfiqfy80O5EP0VoBiVrcs3GGcjJjGKAyr2UAxNtG'})
+        
         if response.status_code == 200:      
         # Parse the JSON response
             servers = response.json() 
@@ -816,7 +814,7 @@ def handle_callback(update):
         url = f'https://api.telegram.org/bot{TOKEN}/sendMessage'
         response = requests.post(env['change-account'] , data={'type':"ssh",'accountnum':str(udata[0]), 'providernum':str(udata[1])}, headers={'token':env['token']})
         add_log(str(response.content), log_type='change-account-ssh')
-        # response = requests.post('http://g11.hologate88.com:81/api/change-account' ,  data={'type':"ssh",'accountnum':str(udata[0]), 'providernum':str(udata[1])}, headers={'token':'UGFGtZ.RkMfiqfy80O5EP0VoBiVrcs3GGcjJjGKAyr2UAxNtG'})
+        
     
         if response.status_code == 200:
             account = response.json()
@@ -838,7 +836,7 @@ def handle_callback(update):
         url = f'https://api.telegram.org/bot{TOKEN}/sendMessage'
         response = requests.post(env['change-account'] , data={'type':"v2ray",'accountnum':str(udata[0]), 'providernum':str(udata[1])}, headers={'token':env['token']})
         add_log(str(response.content), log_type='change-account-v2ray')
-        # response = requests.post('http://g11.hologate88.com:81/api/change-account' ,  data={'type':"v2ray",'accountnum':str(udata[0]), 'providernum':str(udata[1])}, headers={'token':'UGFGtZ.RkMfiqfy80O5EP0VoBiVrcs3GGcjJjGKAyr2UAxNtG'})
+        )
     
         if response.status_code == 200:
             account = response.json()
@@ -858,7 +856,7 @@ def handle_callback(update):
     elif "v_account_show*&@@^&" in data:
         udata=data.split(",")
         response = requests.post(env['show-account'] , data={'accountnum':str(udata[0])}, headers={'token':env['token']})
-        # response = requests.post('http://136.243.86.140:81/api/show-account' ,  data={'accountnum':str(udata[0])}, headers={'token':'UGFGtZ.RkMfiqfy80O5EP0VoBiVrcs3GGcjJjGKAyr2UAxNtG'})
+        
         add_log(str(response.content), log_type='show-account2')
         if response.status_code == 200:
         # Parse the JSON response
@@ -886,7 +884,7 @@ def handle_callback(update):
         # tel_send_message(chat_id, str(data))
         url = f'https://api.telegram.org/bot{TOKEN}/sendMessage'
         response = requests.post(env['find-protocol'] , data={'type':"v2ray"}, headers={'token':env['token']})
-        #response = requests.post('http://136.243.86.140:81/api/find-protocol', data={'type':"v2ray"}, headers={'token':'UGFGtZ.RkMfiqfy80O5EP0VoBiVrcs3GGcjJjGKAyr2UAxNtG'})
+        
         add_log(str(response.content), log_type='find-protocol_v2ray')
         if response.status_code == 200:
             
@@ -921,7 +919,7 @@ def handle_callback(update):
         # tel_send_message(chat_id, str(data))
         url = f'https://api.telegram.org/bot{TOKEN}/sendMessage'
         response = requests.post(env['find-protocol'] , data={'type':"ssh"}, headers={'token':env['token']})
-        #response = requests.post('http://136.243.86.140:81/api/find-protocol', data={'type':"v2ray"}, headers={'token':'UGFGtZ.RkMfiqfy80O5EP0VoBiVrcs3GGcjJjGKAyr2UAxNtG'})
+        
         add_log(str(response.content), log_type='find-protocol_ssh')
         if response.status_code == 200:
             
@@ -1005,7 +1003,7 @@ def handle_callback(update):
         chat=chat_id 
         url = f'https://api.telegram.org/bot{TOKEN}/sendMessage'
         response = requests.post(env['buy-account'] , data={'servicenum':str(servicenum), 'providernum':str(providernum),'type':str(type), 'chat':str(chat)}, headers={'token':env['token']})
-        #response = requests.post('http://136.243.86.140:81/api/buy-account', data={'servicenum':str(servicenum), 'providernum':str(providernum),'type':str(type), 'chat':str(chat)}, headers={'token':'UGFGtZ.RkMfiqfy80O5EP0VoBiVrcs3GGcjJjGKAyr2UAxNtG'})
+        
         add_log(str(response.content), log_type='buy-account')
         if response.status_code == 200:
             account= response.json() 
@@ -1103,8 +1101,7 @@ def handle_callback(update):
         chat=chat_id 
         url = f'https://api.telegram.org/bot{TOKEN}/sendMessage'
         response = requests.post(env['buy-account'] , data={'servicenum':str(servicenum), 'providernum':str(providernum),'type':str(type), 'chat':str(chat)}, headers={'token':env['token']})
-        #response = requests.post('http://136.243.86.140:81/api/buy-account', data={'servicenum':str(servicenum), 'providernum':str(providernum),'type':str(type), 'chat':str(chat)}, headers={'token':'UGFGtZ.RkMfiqfy80O5EP0VoBiVrcs3GGcjJjGKAyr2UAxNtG'})
-        add_log(str(response.content), log_type='buy-account')
+        
         if response.status_code == 200:
             account= response.json() 
             if "error1" in account:
@@ -1622,7 +1619,7 @@ def state_handling(chat_id,txt):
                     discount= txt
                     url = f'https://api.telegram.org/bot{TOKEN}/sendMessage'
                     response = requests.post(env['buy-account'] , data={'servicenum':str(servicenum), 'providernum':str(providernum),'type':str(type), 'chat':str(chat_id), 'discount':str(discount)}, headers={'token':env['token']})
-                    #response = requests.post('http://136.243.86.140:81/api/buy-account', data={'servicenum':str(servicenum), 'providernum':str(providernum),'type':str(type), 'chat':str(chat_id), 'vocher':str(vocher)}, headers={'token':'UGFGtZ.RkMfiqfy80O5EP0VoBiVrcs3GGcjJjGKAyr2UAxNtG'})
+                    
                     add_log(str(response.content), log_type='buy-account_with_discount_ssh')
                     if response.status_code == 200:
                         account= response.json() 
@@ -1873,7 +1870,7 @@ def state_handling(chat_id,txt):
                     discount= txt
                     url = f'https://api.telegram.org/bot{TOKEN}/sendMessage'
                     response = requests.post(env['buy-account'] , data={'servicenum':str(servicenum), 'providernum':str(providernum),'type':str(type), 'chat':str(chat_id), 'discount':str(discount)}, headers={'token':env['token']})
-                    #response = requests.post('http://136.243.86.140:81/api/buy-account', data={'servicenum':str(servicenum), 'providernum':str(providernum),'type':str(type), 'chat':str(chat_id), 'vocher':str(vocher)}, headers={'token':'UGFGtZ.RkMfiqfy80O5EP0VoBiVrcs3GGcjJjGKAyr2UAxNtG'})
+                    
                     add_log(str(response.content), log_type='buy-account_with_discount_v2ray')
                     if response.status_code == 200:
                         account= response.json() 
